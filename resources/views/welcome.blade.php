@@ -1,23 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Laravel meets Gacela</title>
-        <style type="text/css">
-            body, html {
-                margin: 0; padding: 0; height: 100%; overflow: hidden;
-            }
-
-            #content {
-                position:absolute; left: 0; right: 0; bottom: 0; top: 0px;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="content">
-            <iframe width="100%" height="100%" frameborder="0" src="http://gacela-project.com/">
-                Laravel meets Gacela
-            </iframe>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <title>Gacela Template</title>
+</head>
+<body>
+<div class="flex-center position-ref full-height">
+    <div class="content">
+        <div class="logo"><img src="{{ asset('image/laravel-logo.svg') }}" alt="" width="300" /></div>
+        <div class="links">
+            <a href="http://gacela-project.com/">Website</a>
+            <a href="https://github.com/gacela-project/gacela/">Github Gacela Project</a>
         </div>
-    </body>
+    </div>
+</div>
+</body>
 </html>
