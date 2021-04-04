@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a16c3c541bd99241cab1c21ce8e83ac",
+    "content-hash": "27fcb710d821d5d0d48ea7f079283ea3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -593,6 +593,65 @@
                 }
             ],
             "time": "2020-10-22T13:57:20+00:00"
+        },
+        {
+            "name": "gacela-project/gacela",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gacela-project/gacela.git",
+                "reference": "4ba1455ff871a674654689ebcfe5539a350f6578"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gacela-project/gacela/zipball/4ba1455ff871a674654689ebcfe5539a350f6578",
+                "reference": "4ba1455ff871a674654689ebcfe5539a350f6578",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.18",
+                "phpunit/phpunit": "^9.5",
+                "symfony/var-dumper": "^5.2",
+                "vimeo/psalm": "^4.6"
+            },
+            "default-branch": true,
+            "bin": [
+                "gacela"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gacela\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jose Maria Valera Reales",
+                    "email": "chemaclass@outlook.es"
+                },
+                {
+                    "name": "Jesus Valera Reales",
+                    "email": "jesus1902@outlook.com"
+                }
+            ],
+            "description": "Gacela Framework",
+            "keywords": [
+                "kernel",
+                "modular",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/gacela-project/gacela/issues",
+                "source": "https://github.com/gacela-project/gacela/tree/master"
+            },
+            "time": "2021-04-02T22:25:59+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -7370,7 +7429,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "gacela-project/gacela": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
