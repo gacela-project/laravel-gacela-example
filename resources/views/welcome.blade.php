@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>Gacela Template</title>
+    <base target="_blank">
 </head>
 <body>
 <div class="flex-center position-ref full-height">

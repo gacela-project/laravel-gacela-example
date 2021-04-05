@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27fcb710d821d5d0d48ea7f079283ea3",
+    "content-hash": "3a00d1c4ac08d0518604ce7462c81346",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -600,12 +600,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gacela-project/gacela.git",
-                "reference": "4ba1455ff871a674654689ebcfe5539a350f6578"
+                "reference": "f6ec328549ba7662801d4e33a59e2cb7cdd4c5a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gacela-project/gacela/zipball/4ba1455ff871a674654689ebcfe5539a350f6578",
-                "reference": "4ba1455ff871a674654689ebcfe5539a350f6578",
+                "url": "https://api.github.com/repos/gacela-project/gacela/zipball/f6ec328549ba7662801d4e33a59e2cb7cdd4c5a5",
+                "reference": "f6ec328549ba7662801d4e33a59e2cb7cdd4c5a5",
                 "shasum": ""
             },
             "require": {
@@ -651,7 +651,7 @@
                 "issues": "https://github.com/gacela-project/gacela/issues",
                 "source": "https://github.com/gacela-project/gacela/tree/master"
             },
-            "time": "2021-04-02T22:25:59+00:00"
+            "time": "2021-04-05T11:05:03+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -7435,7 +7435,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3|^8.0"
+        "php": "^7.4|^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"

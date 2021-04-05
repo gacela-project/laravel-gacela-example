@@ -43,6 +43,17 @@ $app->singleton(
 
 /*
 |--------------------------------------------------------------------------
+| Define the application root to the Gacela Config
+|--------------------------------------------------------------------------
+|
+| Finally, we will be able to call any config value from the /config dir
+| using the $this->get() method.
+|
+*/
+\Gacela\Framework\Config::setApplicationRootDir(base_path());
+
+/*
+|--------------------------------------------------------------------------
 | Return The Application
 |--------------------------------------------------------------------------
 |
