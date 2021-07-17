@@ -3,7 +3,7 @@
 Gacela is a framework that helps you to improve the design of your application by splitting the logic into different
 modules.
 
-This repo is a usage example of Gacela using Laravel `8.35.1`.
+This repo is a usage example of Gacela using Laravel `8.50.0`.
 
 Instead of having all things together inside `app`, you will find different modules that helps you identify the use
 cases and grouped by responsibilities, splitting as well the Infrastructure, and the Domain code.
