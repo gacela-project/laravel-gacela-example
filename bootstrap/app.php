@@ -50,7 +50,7 @@ $app->singleton(
 | using the $this->get() method.
 |
 */
-\Gacela\Framework\Config::setApplicationRootDir(base_path());
+\Gacela\Framework\Config::getInstance()->setApplicationRootDir(base_path());
 
 /*
 |--------------------------------------------------------------------------
