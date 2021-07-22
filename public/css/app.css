@@ -22,10 +22,9 @@ html, body {
 }
 
 .links > a {
-    color: #ff2d20;
     padding: 0 15px;
     font-weight: bolder;
-    font-size: larger;
+    font-size: x-large;
     letter-spacing: .1rem;
     text-decoration: none;
 }

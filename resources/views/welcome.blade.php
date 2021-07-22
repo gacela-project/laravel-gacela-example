@@ -10,10 +10,10 @@
 <body>
 <div class="flex-center position-ref full-height">
     <div class="content">
-        <div class="logo"><img src="{{ asset('image/laravel-logo.svg') }}" alt="" width="300" /></div>
+        <div class="logo"><img src="{{ asset('image/gacela-logo.svg') }}" alt="" width="300" /></div>
         <div class="links">
+            <a href="https://github.com/gacela-project/gacela/">Github Gacela</a>
             <a href="http://gacela-project.com/">Website</a>
-            <a href="https://github.com/gacela-project/gacela/">Github Gacela Project</a>
         </div>
     </div>
 </div>
