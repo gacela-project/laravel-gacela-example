@@ -6,9 +6,6 @@ namespace App\Shared;
 
 use Gacela\Framework\AbstractFactory;
 
-/**
- * @method Config getConfig()
- */
 final class Factory extends AbstractFactory
 {
 }

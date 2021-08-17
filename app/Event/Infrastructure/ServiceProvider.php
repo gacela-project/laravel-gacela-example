@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Event\Infrastructure;
 
@@ -12,8 +12,6 @@ final class ServiceProvider extends SupportServiceProvider
 {
     /**
      * The event listener mappings for the application.
-     *
-     * @var array
      */
     protected $listen = [
         Registered::class => [

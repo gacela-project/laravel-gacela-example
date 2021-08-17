@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Http\Middleware;
 
@@ -10,8 +10,6 @@ final class EncryptCookies extends Middleware
 {
     /**
      * The names of the cookies that should not be encrypted.
-     *
-     * @var array
      */
     protected $except = [
         //
