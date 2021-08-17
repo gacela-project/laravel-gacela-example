@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Auth\Infrastructure;
 
@@ -11,8 +11,6 @@ final class ServiceProvider extends SupportServiceProvider
 {
     /**
      * The policy mappings for the application.
-     *
-     * @var array
      */
     protected $policies = [
         // 'App\Main\Infrastructure\Models\Model' => 'App\Main\Infrastructure\Policies\ModelPolicy',

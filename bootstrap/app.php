@@ -47,10 +47,10 @@ $app->singleton(
 |--------------------------------------------------------------------------
 |
 | Finally, we will be able to call any config value from the /config dir
-| using the $this->get() method.
+| using the $this->get() and resolve the interfaces from the 'gacela.php'.
 |
 */
-\Gacela\Framework\Config::getInstance()->setApplicationRootDir(base_path());
+\Gacela\Framework\Gacela::bootstrap(base_path());
 
 /*
 |--------------------------------------------------------------------------

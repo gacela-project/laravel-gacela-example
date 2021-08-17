@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Router\Infrastructure;
 
@@ -16,8 +16,6 @@ final class ServiceProvider extends SupportServiceProvider
      * The path to the "home" route for your application.
      *
      * This is used by Laravel authentication to redirect users after login.
-     *
-     * @var string
      */
     public const HOME = '/home';
 
