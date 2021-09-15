@@ -1,5 +1,7 @@
 <?php
 
+use App\Product\Infrastructure\Controller\AddProductController;
+use App\Product\Infrastructure\Controller\ListProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', fn () => view('welcome'));
+Route::get('/list', ListProductController::class)->name('product_list');
+Route::get('/add/{name}', AddProductController::class)->name('product_add');

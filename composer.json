@@ -1,5 +1,5 @@
 {
-    "name": "gacela-project/laravel-gacela-examplel",
+    "name": "gacela-project/laravel-gacela-example",
     "type": "project",
     "description": "Laravel using Gacela Framework",
     "keywords": ["framework", "gacela", "laravel"],
@@ -9,16 +9,16 @@
         "fruitcake/laravel-cors": "^2.0",
         "gacela-project/gacela": "^0.8",
         "guzzlehttp/guzzle": "^7.3",
-        "laravel/framework": "^8.54",
+        "laravel/framework": "^8.60",
         "laravel/tinker": "^2.6"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "facade/ignition": "^2.11",
-        "fakerphp/faker": "^1.15",
-        "laravel/sail": "^1.9",
+        "facade/ignition": "^2.12",
+        "fakerphp/faker": "^1.16",
+        "laravel/sail": "^1.10",
         "mockery/mockery": "^1.4",
-        "nunomaduro/collision": "^5.8",
+        "nunomaduro/collision": "^5.9",
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
