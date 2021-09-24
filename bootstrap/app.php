@@ -28,17 +28,17 @@ $app = new Illuminate\Foundation\Application(
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
-    App\Shared\Infrastructure\Http\Kernel::class
+    App\Http\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    App\Console\Infrastructure\Kernel::class
+    App\Console\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    App\Shared\Infrastructure\Exceptions\Handler::class
+    App\Exceptions\Handler::class
 );
 
 /*
@@ -46,11 +46,15 @@ $app->singleton(
 | Define the application root to the Gacela Config
 |--------------------------------------------------------------------------
 |
-| Finally, we will be able to call any config value from the /config dir
+| Finally, we will be able to bootstrap Gacela in order to get the config
 | using the $this->get() and resolve the interfaces from the 'gacela.php'.
 |
 */
-\Gacela\Framework\Gacela::bootstrap(base_path());
+
+\Gacela\Framework\Gacela::bootstrap(
+    base_path(),
+    ['laravel/app' => $app]
+);
 
 /*
 |--------------------------------------------------------------------------

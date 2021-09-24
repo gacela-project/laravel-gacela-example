@@ -1,11 +1,11 @@
 <?php
 
-use App\Product\Domain\ProductEntityManagerInterface;
-use App\Product\Domain\ProductRepositoryInterface;
-use App\Shared\Infrastructure\Repository\ProductRepository;
 use Gacela\Framework\AbstractConfigGacela;
+use Src\Product\Domain\ProductEntityManagerInterface;
+use Src\Product\Domain\ProductRepositoryInterface;
+use Src\Product\Infrastructure\Repository\ProductRepository;
 
-return static fn(array $services) => new class($services) extends AbstractConfigGacela {
+return static fn(array $globalServices) => new class($globalServices) extends AbstractConfigGacela {
     public function config(): array
     {
         return [
@@ -23,6 +23,9 @@ return static fn(array $services) => new class($services) extends AbstractConfig
 
     public function mappingInterfaces(): array
     {
+        /** @var \Illuminate\Foundation\Application $app */
+        $app = $this->getGlobalService('laravel/app');
+
         return [
             ProductRepositoryInterface::class => ProductRepository::class,
             ProductEntityManagerInterface::class => ProductRepository::class,

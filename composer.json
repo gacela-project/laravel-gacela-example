@@ -5,25 +5,26 @@
     "keywords": ["framework", "gacela", "laravel"],
     "require": {
         "php": "^7.4|^8.0",
-        "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
-        "gacela-project/gacela": "^0.8",
+        "gacela-project/gacela": "^0.9",
         "guzzlehttp/guzzle": "^7.3",
-        "laravel/framework": "^8.60",
+        "laravel/framework": "^8.61",
+        "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.6"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "facade/ignition": "^2.12",
+        "facade/ignition": "^2.13",
         "fakerphp/faker": "^1.16",
         "laravel/sail": "^1.10",
         "mockery/mockery": "^1.4",
-        "nunomaduro/collision": "^5.9",
+        "nunomaduro/collision": "^5.10",
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Src\\": "src/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
@@ -37,6 +38,9 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
