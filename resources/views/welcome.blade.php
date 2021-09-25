@@ -13,7 +13,7 @@
         <div class="logo"><img src="{{ asset('image/gacela-logo.svg') }}" alt="" width="300" /></div>
         <div class="links">
             <a href="https://github.com/gacela-project/gacela/">Github Gacela</a>
-            <a href="http://gacela-project.com/">Website</a>
+            <a href="https://gacela-project.com/">Website</a>
         </div>
     </div>
 </div>

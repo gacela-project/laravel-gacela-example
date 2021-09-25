@@ -1,62 +1,103 @@
 ## About Laravel Gacela Example
 
-Gacela is a framework that helps you to improve the design of your application by splitting the logic into different
-modules.
+This is an example of how to use Laravel with Gacela modules.
 
-This repo is a usage example of Gacela using Laravel `8.54.0`.
-
-Instead of having all things together inside `app`, you will find different modules that helps you identify the use
-cases and grouped by responsibilities, splitting as well the Infrastructure, and the Domain code.
-
-## Main architecture differences
-
-### BEFORE
-
-This is the current version of a laravel:
-
-```
-- app
-| -- Console
-| -- Exception
-| -- Http
-| -- Models
-| -- Providers
-```
-
-### AFTER
-
-We moved the app directories into their own modules, so you can easily identify the responsibilities and distinguish the
-different layers between Infrastructure and Domain.
-
-```
-- app
-| -- Auth
-| ---- Infrastructure
-| -- Broadcast
-| ---- Infrastructure
-| -- Calculator (NEW example module which uses Gacela's Facade and Factory)
-| ---- Domain
-| ---- Infrastructure
-| -- Console
-| ---- Infrastructure
-| -- Event
-| ---- Infrastructure
-| -- Router
-| ---- Infrastructure
-| -- Shared
-| ---- Infrastructure
-| ------ Console
-| ------ Exceptions
-| ------ Http
-| ------ Models
-| ------ Providers
-```
+The trick is to allow the autowiring mechanism from Laravel so the Facade injects its Factory and the Factory injects
+whatever you want. This is a useful way to get the Laravel Repositories in your Factory, so you can inject them in your
+application services.
 
 ## Development
 
 If you want to try out this template, don't forget to create the `.env` file:
 ``` 
 cp .env.example .env
+```
+
+Also, this repository example uses sqlite, so you can easily check out and try it yourself :)
+```
+1. Create a empty file in '/database/database.sqlite'
+2. Execute the 'php artisan migrate' command
+```
+
+There are two commands and two controllers inside the Product module:
+
+### Commands
+
+> App > Console > Commands > { AddProductCommand | ListProductCommand }
+
+```bash
+php artisan gacela:product:add {PRODUCT_NAME}
+
+php artisan gacela:product:list
+```
+
+### Controllers
+
+> App > Http > Controller > { AddProductController | ListProductController }
+
+In order to run locally the application, run `php artisan serve`
+
+```bash
+php artisan route:list
+```
+
++----------+------------+--------------+--------------------------------------------+------------+
+| Method   | URI        | Name         | Action                                     | Middleware |
++----------+------------+--------------+--------------------------------------------+------------+
+| GET|HEAD | add/{name} | product_add  | App\Http\Controllers\AddProductController  | web        |
+| GET|HEAD | list       | product_list | App\Http\Controllers\ListProductController | web        |
++----------+------------+--------------+--------------------------------------------+------------+
+
+## Injecting the Doctrine ProductRepository to the Facade Factory
+
+The Gacela Factory (as well as the Config and DependencyProvider) has an autowiring logic that will automagically
+resolve its dependencies. The only exception is for interfaces, when there is no way to discover what want to inject there.
+For this purpose, you simply need to define the mapping between the interfaces
+and to what do you want them to be resolved (in `gacela.php`): `mappingInterfaces(): array`
+
+Actually, in our current context/example (using laravel) it does not make sense the idea of injecting an `Entity
+Manager`, but in case we would like to inject an instance from the kernel, we should inject it to the Gacela bootstrap.
+
+### How can you use the original laravel app in Gacela?
+
+To use the original app you simply pass it as a global service in Gacela
+in the entry point of the application. It might be in the `public/index.php` or `bin/console`.
+
+```php
+# bootstrap/app.php
+$app = new Illuminate\Foundation\Application(
+    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
+);
+
+// $app-> ...
+
+\Gacela\Framework\Gacela::bootstrap(
+    base_path(),
+    ['laravel/app' => $app]
+);
+```
+
+Afterwards, you can access to it easily in your `gacela.php` file from the `$this->getGlobalService('symfony/kernel')`
+and this way you can specify in the `'dependencies'` that when the `EntityManagerInterface::class` is found, then you
+want to resolve it using the "doctrine service" from the original kernel.
+
+```php
+<?php
+return static fn(array $globalServices) => new class($globalServices) extends AbstractConfigGacela {
+
+    // ...
+
+    public function mappingInterfaces(): array
+    {
+        /** @var \Illuminate\Foundation\Application $app */
+        $app = $this->getGlobalService('laravel/app');
+
+        return [
+            ProductRepositoryInterface::class => ProductRepository::class,
+            ProductEntityManagerInterface::class => ProductRepository::class,
+        ];
+    }
+};
 ```
 
 ## Gacela Framework
