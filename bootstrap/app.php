@@ -53,7 +53,8 @@ $app->singleton(
 
 \Gacela\Framework\Gacela::bootstrap(
     base_path(),
-    ['laravel/app' => $app]
+    ['laravel/app' => $app],
+    ['env' => new \Gacela\Framework\Config\ConfigReader\EnvConfigReader()]
 );
 
 /*

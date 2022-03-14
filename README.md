@@ -2,7 +2,7 @@
 
 This is an example of how to use Laravel with Gacela modules.
 
-The trick is to allow the autowiring mechanism from Laravel so the Facade injects its Factory and the Factory injects
+The trick is to allow the auto wiring mechanism from Laravel so the Facade injects its Factory and the Factory injects
 whatever you want. This is a useful way to get the Laravel Repositories in your Factory, so you can inject them in your
 application services.
 
@@ -41,12 +41,10 @@ In order to run locally the application, run `php artisan serve`
 php artisan route:list
 ```
 
-+----------+------------+--------------+--------------------------------------------+------------+
-| Method   | URI        | Name         | Action                                     | Middleware |
-+----------+------------+--------------+--------------------------------------------+------------+
-| GET|HEAD | add/{name} | product_add  | App\Http\Controllers\AddProductController  | web        |
-| GET|HEAD | list       | product_list | App\Http\Controllers\ListProductController | web        |
-+----------+------------+--------------+--------------------------------------------+------------+
+| Method   | URI        | Name          | Action                                      | Middleware |
+|----------|------------|---------------|---------------------------------------------|------------|
+| GET HEAD | add/{name} | product_add   | App\Http\Controllers\AddProductController   | web        |
+| GET HEAD | list       | product_list  | App\Http\Controllers\ListProductController  | web        |
 
 ## Injecting the Doctrine ProductRepository to the Facade Factory
 
@@ -73,7 +71,8 @@ $app = new Illuminate\Foundation\Application(
 
 \Gacela\Framework\Gacela::bootstrap(
     base_path(),
-    ['laravel/app' => $app]
+    ['laravel/app' => $app],
+    ['env' => new \Gacela\Framework\Config\ConfigReader\EnvConfigReader()]
 );
 ```
 
@@ -83,11 +82,11 @@ want to resolve it using the "doctrine service" from the original kernel.
 
 ```php
 <?php
-return static fn(array $globalServices) => new class($globalServices) extends AbstractConfigGacela {
+return static fn () => new class () extends AbstractConfigGacela {
 
     // ...
 
-    public function mappingInterfaces(): array
+    public function mappingInterfaces(array $globalServices): array
     {
         /** @var \Illuminate\Foundation\Application $app */
         $app = $this->getGlobalService('laravel/app');

@@ -17,11 +17,23 @@ final class AddProductController extends Controller
         $this->productFacade = $productFacade;
     }
 
-    public function __invoke(string $name): RedirectResponse
+    public function __invoke(string $name, string $price = null): RedirectResponse
     {
-        $price = 123456;
-        $this->productFacade->createNewProduct($name, $price);
+        $this->productFacade->createNewProduct($name, $this->validatePriceInput($price));
 
         return Redirect::to('list')->with('success', "The product {$name} has been created.");
+    }
+
+    private function validatePriceInput(?string $price): ?int
+    {
+        if ($price === null) {
+            return null;
+        }
+
+        if (filter_var($price, FILTER_VALIDATE_INT) === 0 || !filter_var($price, FILTER_VALIDATE_INT) === false) {
+            return (int) $price;
+        }
+
+        throw new \RuntimeException('Second parameter [price] must be of type integer');
     }
 }

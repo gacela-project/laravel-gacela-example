@@ -5,7 +5,7 @@ use Src\Product\Domain\ProductEntityManagerInterface;
 use Src\Product\Domain\ProductRepositoryInterface;
 use Src\Product\Infrastructure\Repository\ProductRepository;
 
-return static fn(array $globalServices) => new class($globalServices) extends AbstractConfigGacela {
+return static fn() => new class() extends AbstractConfigGacela {
     public function config(): array
     {
         return [
@@ -21,10 +21,10 @@ return static fn(array $globalServices) => new class($globalServices) extends Ab
         ];
     }
 
-    public function mappingInterfaces(): array
+    public function mappingInterfaces(array $globalServices): array
     {
         /** @var \Illuminate\Foundation\Application $app */
-        $app = $this->getGlobalService('laravel/app');
+        $app = $globalServices['laravel/app'];
 
         return [
             ProductRepositoryInterface::class => ProductRepository::class,

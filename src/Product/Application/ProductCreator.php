@@ -28,6 +28,6 @@ final class ProductCreator
         $product->price = $price ?? $this->defaultPrice;
 
         $this->productEntityManager->save($product);
-        # send events, or emails, or whatever
+        # send events, emails, or whatever
     }
 }
