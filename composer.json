@@ -6,7 +6,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "fruitcake/laravel-cors": "^2.0",
-        "gacela-project/gacela": "dev-master",
+        "gacela-project/gacela": "0.14",
         "gacela-project/gacela-env-config-reader": "dev-master",
         "guzzlehttp/guzzle": "^7.4",
         "laravel/framework": "^8.82",

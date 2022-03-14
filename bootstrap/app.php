@@ -51,11 +51,40 @@ $app->singleton(
 |
 */
 
+##############################
+# OPTION A: Using gacela.php #
+##############################
 \Gacela\Framework\Gacela::bootstrap(
     base_path(),
     ['laravel/app' => $app],
-    ['env' => new \Gacela\Framework\Config\ConfigReader\EnvConfigReader()]
 );
+
+############################################################
+# OPTION B: Directly here. Without the need for gacela.php #
+############################################################
+
+//use Gacela\Framework\Config\ConfigReader\EnvConfigReader;
+//use Gacela\Framework\Config\GacelaConfigBuilder\ConfigBuilder;
+//use Gacela\Framework\Config\GacelaConfigBuilder\MappingInterfacesBuilder;
+//use Src\Product\Domain\ProductRepositoryInterface;
+//use Src\Product\Infrastructure\Repository\ProductRepository;
+//
+//\Gacela\Framework\Gacela::bootstrap(base_path(), [
+//    'laravel/app' => $app,
+//    'config' => function (ConfigBuilder $configBuilder): void {
+//        $configBuilder->add('.env*', '.env.local', EnvConfigReader::class);
+//        $configBuilder->add('config/*.php');
+//    },
+//    'mapping-interfaces' => function (
+//        MappingInterfacesBuilder $mappingInterfacesBuilder,
+//        array $globalServices
+//    ): void {
+//        /** @var \Illuminate\Foundation\Application $app */
+//        $app = $globalServices['laravel/app'];
+//
+//        $mappingInterfacesBuilder->bind(ProductRepositoryInterface::class, ProductRepository::class);
+//    },
+//]);
 
 /*
 |--------------------------------------------------------------------------

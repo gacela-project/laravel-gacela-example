@@ -5,18 +5,31 @@ declare(strict_types=1);
 namespace Src\Product\Infrastructure\Repository;
 
 use App\Models\Product;
-use Src\Product\Domain\ProductEntityManagerInterface;
 use Src\Product\Domain\ProductRepositoryInterface;
+use Src\Product\Domain\ProductTransfer;
 
-final class ProductRepository implements ProductRepositoryInterface, ProductEntityManagerInterface
+final class ProductRepository implements ProductRepositoryInterface
 {
-    public function save(Product $product): void
+    public function save(ProductTransfer $productTransfer): void
     {
-        $product->save();
+        $productEntity = new Product();
+        $productEntity->name = $productTransfer->getName();
+        $productEntity->price = $productTransfer->getPrice();
+
+        $productEntity->save();
     }
 
     public function findAll(): array
     {
-        return Product::all()->all();
+        return array_map(
+            static function(Product $p) {
+                $productTransfer = (new ProductTransfer());
+                $productTransfer->setPrice((int)$p->price);
+                $productTransfer->setName($p->name);
+
+                return $productTransfer;
+            },
+            Product::all()->all()
+        );
     }
 }
