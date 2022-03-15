@@ -6,19 +6,20 @@
     "require": {
         "php": "^7.4|^8.0",
         "fruitcake/laravel-cors": "^2.0",
-        "gacela-project/gacela": "^0.9",
-        "guzzlehttp/guzzle": "^7.3",
-        "laravel/framework": "^8.61",
-        "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.6"
+        "gacela-project/gacela": "0.14",
+        "gacela-project/gacela-env-config-reader": "dev-master",
+        "guzzlehttp/guzzle": "^7.4",
+        "laravel/framework": "^8.82",
+        "laravel/sanctum": "^2.14",
+        "laravel/tinker": "^2.7"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "facade/ignition": "^2.13",
-        "fakerphp/faker": "^1.16",
-        "laravel/sail": "^1.10",
-        "mockery/mockery": "^1.4",
-        "nunomaduro/collision": "^5.10",
+        "facade/ignition": "^2.17",
+        "fakerphp/faker": "^1.19",
+        "laravel/sail": "^1.13",
+        "mockery/mockery": "^1.5",
+        "nunomaduro/collision": "^5.11",
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {

@@ -1,34 +1,24 @@
 <?php
 
 use Gacela\Framework\AbstractConfigGacela;
-use Src\Product\Domain\ProductEntityManagerInterface;
+use Gacela\Framework\Config\ConfigReader\EnvConfigReader;
+use Gacela\Framework\Config\GacelaConfigBuilder\ConfigBuilder;
+use Gacela\Framework\Config\GacelaConfigBuilder\MappingInterfacesBuilder;
 use Src\Product\Domain\ProductRepositoryInterface;
 use Src\Product\Infrastructure\Repository\ProductRepository;
 
-return static fn(array $globalServices) => new class($globalServices) extends AbstractConfigGacela {
-    public function config(): array
+return static fn() => new class() extends AbstractConfigGacela {
+    public function config(ConfigBuilder $configBuilder): void
     {
-        return [
-            [
-                'type' => 'env',
-                'path' => '.env*',
-                'path_local' => '.env',
-            ],
-            [
-                'type' => 'php',
-                'path' => 'config/*.php',
-            ],
-        ];
+        $configBuilder->add('.env*', '.env', EnvConfigReader::class);
+        $configBuilder->add('config/*.php');
     }
 
-    public function mappingInterfaces(): array
+    public function mappingInterfaces(MappingInterfacesBuilder $mappingInterfacesBuilder, array $globalServices): void
     {
         /** @var \Illuminate\Foundation\Application $app */
-        $app = $this->getGlobalService('laravel/app');
+        $app = $globalServices['laravel/app'];
 
-        return [
-            ProductRepositoryInterface::class => ProductRepository::class,
-            ProductEntityManagerInterface::class => ProductRepository::class,
-        ];
+        $mappingInterfacesBuilder->bind(ProductRepositoryInterface::class, ProductRepository::class);
     }
 };

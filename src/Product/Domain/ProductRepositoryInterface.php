@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Src\Product\Domain;
 
-use App\Models\Product;
-
 interface ProductRepositoryInterface
 {
+    public function save(ProductTransfer $productTransfer): void;
+
     /**
-     * @return list<int, Product>
+     * @return list<ProductTransfer>
      */
     public function findAll(): array;
 }

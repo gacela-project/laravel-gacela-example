@@ -6,7 +6,6 @@ namespace App\Console;
 
 use App\Console\Commands\AddProductCommand;
 use App\Console\Commands\ListProductCommand;
-use App\Console\Commands\HelloWorldCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -18,7 +17,6 @@ final class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        HelloWorldCommand::class,
         AddProductCommand::class,
         ListProductCommand::class,
     ];

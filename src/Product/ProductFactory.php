@@ -6,7 +6,6 @@ namespace Src\Product;
 
 use Src\Product\Application\ProductCreator;
 use Src\Product\Application\ProductLister;
-use Src\Product\Domain\ProductEntityManagerInterface;
 use Src\Product\Domain\ProductRepositoryInterface;
 use Gacela\Framework\AbstractFactory;
 
@@ -16,20 +15,17 @@ use Gacela\Framework\AbstractFactory;
 final class ProductFactory extends AbstractFactory
 {
     private ProductRepositoryInterface $productRepository;
-    private ProductEntityManagerInterface $productEntityManager;
 
     public function __construct(
-        ProductRepositoryInterface $productRepository,
-        ProductEntityManagerInterface $productEntityManager
+        ProductRepositoryInterface $productRepository
     ) {
         $this->productRepository = $productRepository;
-        $this->productEntityManager = $productEntityManager;
     }
 
     public function createProductCreator(): ProductCreator
     {
         return new ProductCreator(
-            $this->productEntityManager,
+            $this->productRepository,
             $this->getConfig()->getDefaultProductPrice()
         );
     }
