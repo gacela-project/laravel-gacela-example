@@ -56,7 +56,7 @@ $app->singleton(
 ##############################
 \Gacela\Framework\Gacela::bootstrap(
     base_path(),
-    ['laravel/app' => $app],
+    static fn(\Gacela\Framework\Bootstrap\GacelaConfig $config) => $config->addExternalService('laravel/app', $app)
 );
 
 ############################################################

@@ -5,19 +5,19 @@
     "keywords": ["framework", "gacela", "laravel"],
     "require": {
         "php": "^7.4|^8.0",
-        "fruitcake/laravel-cors": "^2.0",
-        "gacela-project/gacela": "0.14",
+        "fruitcake/laravel-cors": "^2.2",
+        "gacela-project/gacela": "^0.18",
         "gacela-project/gacela-env-config-reader": "dev-master",
         "guzzlehttp/guzzle": "^7.4",
-        "laravel/framework": "^8.82",
-        "laravel/sanctum": "^2.14",
+        "laravel/framework": "^8.83",
+        "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.7"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "facade/ignition": "^2.17",
         "fakerphp/faker": "^1.19",
-        "laravel/sail": "^1.13",
+        "laravel/sail": "^1.14",
         "mockery/mockery": "^1.5",
         "nunomaduro/collision": "^5.11",
         "phpunit/phpunit": "^9.5"
