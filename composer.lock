@@ -514,12 +514,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gacela-project/gacela.git",
-                "reference": "99417d3db990de86e41420ffe95aacdd3ce33474"
+                "reference": "2bbfce4228b24d699031f0e1cac713e0b2d95c63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gacela-project/gacela/zipball/99417d3db990de86e41420ffe95aacdd3ce33474",
-                "reference": "99417d3db990de86e41420ffe95aacdd3ce33474",
+                "url": "https://api.github.com/repos/gacela-project/gacela/zipball/2bbfce4228b24d699031f0e1cac713e0b2d95c63",
+                "reference": "2bbfce4228b24d699031f0e1cac713e0b2d95c63",
                 "shasum": ""
             },
             "require": {
@@ -571,7 +571,7 @@
                 "issues": "https://github.com/gacela-project/gacela/issues",
                 "source": "https://github.com/gacela-project/gacela/tree/0.21.0"
             },
-            "time": "2022-05-29T10:02:19+00:00"
+            "time": "2022-05-29T11:52:12+00:00"
         },
         {
             "name": "gacela-project/gacela-env-config-reader",
