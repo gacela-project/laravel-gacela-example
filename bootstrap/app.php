@@ -54,37 +54,24 @@ $app->singleton(
 ##############################
 # OPTION A: Using gacela.php #
 ##############################
-\Gacela\Framework\Gacela::bootstrap(
-    base_path(),
-    static fn(\Gacela\Framework\Bootstrap\GacelaConfig $config) => $config->addExternalService('laravel/app', $app)
-);
+\Gacela\Framework\Gacela::bootstrap(base_path());
 
 ############################################################
 # OPTION B: Directly here. Without the need for gacela.php #
 ############################################################
 
+//use Gacela\Framework\Bootstrap\GacelaConfig;
 //use Gacela\Framework\Config\ConfigReader\EnvConfigReader;
-//use Gacela\Framework\Config\GacelaConfigBuilder\ConfigBuilder;
-//use Gacela\Framework\Config\GacelaConfigBuilder\MappingInterfacesBuilder;
+//use Gacela\Framework\Gacela;
 //use Src\Product\Domain\ProductRepositoryInterface;
 //use Src\Product\Infrastructure\Repository\ProductRepository;
 //
-//\Gacela\Framework\Gacela::bootstrap(base_path(), [
-//    'laravel/app' => $app,
-//    'config' => function (ConfigBuilder $configBuilder): void {
-//        $configBuilder->add('.env*', '.env.local', EnvConfigReader::class);
-//        $configBuilder->add('config/*.php');
-//    },
-//    'mapping-interfaces' => function (
-//        MappingInterfacesBuilder $mappingInterfacesBuilder,
-//        array $globalServices
-//    ): void {
-//        /** @var \Illuminate\Foundation\Application $app */
-//        $app = $globalServices['laravel/app'];
+//$configFn = static fn(GacelaConfig $config) => $config
+//    ->addAppConfig('.env*', '.env', EnvConfigReader::class)
+//    ->addAppConfig('config/*.php')
+//    ->addMappingInterface(ProductRepositoryInterface::class, ProductRepository::class);
 //
-//        $mappingInterfacesBuilder->bind(ProductRepositoryInterface::class, ProductRepository::class);
-//    },
-//]);
+//Gacela::bootstrap(base_path(), $configFn);
 
 /*
 |--------------------------------------------------------------------------

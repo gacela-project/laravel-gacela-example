@@ -21,7 +21,7 @@ This repository example uses sqlite, so you can easily check out and try it your
 > App > Console > Commands > { AddProductCommand | ListProductCommand }
 
 ```bash
-php artisan gacela:product:add {PRODUCT_NAME} {PRODUCT_PRICE=1996}
+php artisan gacela:product:add {PRODUCT_NAME} {PRODUCT_PRICE=49}
 
 php artisan gacela:product:list
 ```
@@ -40,88 +40,6 @@ php artisan route:list
 |----------|------------|---------------|---------------------------------------------|------------|
 | GET HEAD | add/{name} | product_add   | App\Http\Controllers\AddProductController   | web        |
 | GET HEAD | list       | product_list  | App\Http\Controllers\ListProductController  | web        |
-
-## Injecting the Doctrine ProductRepository to the Facade Factory
-
-The Gacela Factory has an autowiring logic that will automagically resolve its dependencies. The only exception is for
-interfaces, when there is no way to discover what want to inject there. For this purpose, you simply need to define the
-mapping between the interfaces and to what do you want them to be resolved. You can do this in two ways
-
-- OPTION A: In the `Gacela::bootstrap()` you just pass the globalServices that will be used in the `gacela.php` file.
-
-```php
-# bootstrap/app.php
-$app = new Illuminate\Foundation\Application(
-    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
-);
-
-// $app-> ...
-
-Gacela::bootstrap(
-    appRootDir: base_path(), 
-    globalServices: ['laravel/app' => $app]
-);
-```
-
-- OPTION B: Directly in the bootstrap, as globalServices. This way you don't need a `gacela.php` file.
-
-```php
-Gacela::bootstrap($kernel->getProjectDir(), [
-    'mapping-interfaces' => function (
-        MappingInterfacesBuilder $mappingInterfacesBuilder,
-        array $globalServices
-    ): void {
-        $mappingInterfacesBuilder->bind(
-            ProductRepositoryInterface::class,
-            ProductRepository::class
-        );
-        //...
-    },
-]);
-```
-
-### How can you use the original symfony kernel in Gacela?
-
-> Following the previous example using the gacela.php file (OPTION A).
-
-To use the original `$app` you pass it as a globalService in Gacela in the entry point of the application.
-
-```php
-# bootstrap/app.php
-Gacela::bootstrap(
-    appRootDir: base_path(),
-    globalServices: ['laravel/app' => $app],
-);
-```
-
-Afterwards, you can access to it in your `gacela.php` file in the `mappingInterfaces()` method, such as: 
-`$globalServices['laravel/app']`. This way you are telling Gacela what concretion do you want when it encounters
-an abstraction (like an abstract class or an interface).
-
-```php
-use App\Product\Domain\ProductRepositoryInterface;
-use App\Product\Infrastructure\Persistence\ProductRepository;
-
-return static fn() => new class() extends AbstractConfigGacela {
-    public function config(ConfigBuilder $configBuilder): void
-    {
-        $configBuilder->add('.env*', '.env.local', EnvConfigReader::class);
-    }
-
-    public function mappingInterfaces(
-        MappingInterfacesBuilder $mappingInterfacesBuilder,
-        array $globalServices
-    ): void {
-        $mappingInterfacesBuilder->bind(
-            ProductRepositoryInterface::class,
-            ProductRepository::class
-        );
-
-        /** @var \Illuminate\Foundation\Application $app */
-        $app = $globalServices['laravel/app'];
-    }
-};
-```
 
 ---
 

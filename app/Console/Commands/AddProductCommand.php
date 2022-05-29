@@ -4,29 +4,27 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use Gacela\Framework\DocBlockResolverAwareTrait;
 use Src\Product\ProductFacade;
 use Illuminate\Console\Command;
 
+/**
+ * @method ProductFacade getFacade()
+ */
 final class AddProductCommand extends Command
 {
+    use DocBlockResolverAwareTrait;
+
     protected $signature = 'gacela:product:add {name} {price?}';
 
     protected $description = 'Add new product';
-
-    private ProductFacade $productFacade;
-
-    public function __construct(ProductFacade $productFacade)
-    {
-        parent::__construct();
-        $this->productFacade = $productFacade;
-    }
 
     public function handle(): int
     {
         $name = $this->argument('name');
         $price = $this->argument('price');
 
-        $this->productFacade->createNewProduct($name, $this->validatePriceInput($price));
+        $this->getFacade()->createNewProduct($name, $this->validatePriceInput($price));
 
         $this->output->writeln($name . ' product created successfully');
 
