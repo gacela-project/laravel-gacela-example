@@ -4,23 +4,22 @@
     "description": "Laravel using Gacela Framework",
     "keywords": ["framework", "gacela", "laravel"],
     "require": {
-        "php": "^7.4|^8.0",
-        "fruitcake/laravel-cors": "^2.0",
-        "gacela-project/gacela": "0.14",
-        "gacela-project/gacela-env-config-reader": "dev-master",
+        "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.4",
-        "laravel/framework": "^8.82",
-        "laravel/sanctum": "^2.14",
-        "laravel/tinker": "^2.7"
+        "laravel/framework": "^9.14",
+        "laravel/sanctum": "^2.15.1",
+        "laravel/tinker": "^2.7",
+        "gacela-project/gacela": "^0.21",
+        "gacela-project/gacela-env-config-reader": "dev-master"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "facade/ignition": "^2.17",
-        "fakerphp/faker": "^1.19",
-        "laravel/sail": "^1.13",
-        "mockery/mockery": "^1.5",
-        "nunomaduro/collision": "^5.11",
-        "phpunit/phpunit": "^9.5"
+        "fakerphp/faker": "^1.19.0",
+        "laravel/sail": "^1.14.7",
+        "mockery/mockery": "^1.5.0",
+        "nunomaduro/collision": "^6.2",
+        "phpunit/phpunit": "^9.5.20",
+        "spatie/laravel-ignition": "^1.2"
     },
     "autoload": {
         "psr-4": {
@@ -56,9 +55,6 @@
         }
     },
     "config": {
-        "platform": {
-            "php": "7.4"
-        },
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true

@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Gacela\Framework\DocBlockResolverAwareTrait;
 use Src\Product\ProductFacade;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
+/**
+ * @method ProductFacade getFacade()
+ */
 final class AddProductController extends Controller
 {
-    private ProductFacade $productFacade;
-
-    public function __construct(ProductFacade $productFacade)
-    {
-        $this->productFacade = $productFacade;
-    }
+    use DocBlockResolverAwareTrait;
 
     public function __invoke(string $name, string $price = null): RedirectResponse
     {
-        $this->productFacade->createNewProduct($name, $this->validatePriceInput($price));
+        $this->getFacade()->createNewProduct($name, $this->validatePriceInput($price));
 
         return Redirect::to('list')->with('success', "The product {$name} has been created.");
     }
