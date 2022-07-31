@@ -19,6 +19,9 @@ final class ProductRepository implements ProductRepositoryInterface
         $productEntity->save();
     }
 
+    /**
+     * @return list<ProductTransfer>
+     */
     public function findAll(): array
     {
         return array_map(

@@ -9,7 +9,7 @@
         "laravel/framework": "^9.14",
         "laravel/sanctum": "^2.15.1",
         "laravel/tinker": "^2.7",
-        "gacela-project/gacela": "^0.21",
+        "gacela-project/gacela": "^0.24",
         "gacela-project/gacela-env-config-reader": "dev-master"
     },
     "require-dev": {
