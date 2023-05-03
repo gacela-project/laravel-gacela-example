@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b58b6b7d2f8d962378b5166c06f76b4a",
+    "content-hash": "448ac2d56f69379e61f0f9366dc41eab",
     "packages": [
         {
             "name": "brick/math",
@@ -653,7 +653,7 @@
         },
         {
             "name": "gacela-project/gacela-env-config-reader",
-            "version": "dev-master",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gacela-project/gacela-env-config-reader.git",
@@ -707,7 +707,7 @@
             ],
             "support": {
                 "issues": "https://github.com/gacela-project/gacela-env-config-reader/issues",
-                "source": "https://github.com/gacela-project/gacela-env-config-reader/tree/master"
+                "source": "https://github.com/gacela-project/gacela-env-config-reader/tree/main"
             },
             "time": "2022-12-04T18:15:46+00:00"
         },
