@@ -9,5 +9,5 @@ return static function(GacelaConfig $config) {
     $config
         ->addAppConfig('.env*', '.env', EnvConfigReader::class)
         ->addAppConfig('config/*.php')
-        ->addMappingInterface(ProductRepositoryInterface::class, ProductRepository::class);
+        ->addBinding(ProductRepositoryInterface::class, ProductRepository::class);
 };
