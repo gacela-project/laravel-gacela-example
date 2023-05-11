@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\AddProductController;
-use App\Http\Controllers\ListProductController;
+use App\Http\Controllers\Product\AddProductController;
+use App\Http\Controllers\Product\ListProductController;
 use Illuminate\Support\Facades\Route;
 
 /*

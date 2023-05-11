@@ -69,7 +69,7 @@ $app->singleton(
 //$configFn = static fn(GacelaConfig $config) => $config
 //    ->addAppConfig('.env*', '.env', EnvConfigReader::class)
 //    ->addAppConfig('config/*.php')
-//    ->addMappingInterface(ProductRepositoryInterface::class, ProductRepository::class);
+//    ->addBinding(ProductRepositoryInterface::class, ProductRepository::class);
 //
 //Gacela::bootstrap(base_path(), $configFn);
 

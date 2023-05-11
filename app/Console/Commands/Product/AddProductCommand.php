@@ -2,25 +2,33 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Console\Commands\Product;
 
 use Gacela\Framework\DocBlockResolverAwareTrait;
+use Illuminate\Console\Command;
 use Src\Product\ProductFacade;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 
 /**
  * @method ProductFacade getFacade()
  */
-final class AddProductController extends Controller
+final class AddProductCommand extends Command
 {
     use DocBlockResolverAwareTrait;
 
-    public function __invoke(string $name, string $price = null): RedirectResponse
+    protected $signature = 'gacela:product:add {name} {price?}';
+
+    protected $description = 'Add new product';
+
+    public function handle(): int
     {
+        $name = $this->argument('name');
+        $price = $this->argument('price');
+
         $this->getFacade()->createNewProduct($name, $this->validatePriceInput($price));
 
-        return Redirect::to('list')->with('success', "The product {$name} has been created.");
+        $this->output->writeln($name . ' product created successfully');
+
+        return self::SUCCESS;
     }
 
     private function validatePriceInput(?string $price): ?int

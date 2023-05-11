@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Console;
 
-use App\Console\Commands\AddProductCommand;
-use App\Console\Commands\ListProductCommand;
+use App\Console\Commands\Product\AddProductCommand;
+use App\Console\Commands\Product\ListProductCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,8 +13,6 @@ final class Kernel extends ConsoleKernel
 {
     /**
      * The Artisan commands provided by your application.
-     *
-     * @var array
      */
     protected $commands = [
         AddProductCommand::class,
@@ -23,8 +21,6 @@ final class Kernel extends ConsoleKernel
 
     /**
      * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      */
     protected function schedule(Schedule $schedule): void
     {

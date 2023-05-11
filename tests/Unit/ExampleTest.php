@@ -8,10 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     */
-    public function testBasicTest(): void
+    public function test_true(): void
     {
         self::assertTrue(true);
     }

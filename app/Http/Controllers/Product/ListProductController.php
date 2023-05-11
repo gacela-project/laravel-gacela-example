@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Product;
 
+use App\Http\Controllers\Controller;
 use Gacela\Framework\DocBlockResolverAwareTrait;
-use Src\Product\ProductFacade;
 use Illuminate\View\View;
+use Src\Product\ProductFacade;
 
 /**
  * @method ProductFacade getFacade()
