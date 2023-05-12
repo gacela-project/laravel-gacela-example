@@ -19,6 +19,11 @@ final class AddProductCommand extends Command
 
     protected $description = 'Add new product';
 
+    protected function configure(): void
+    {
+        $this->setDescription('Create a new product');
+    }
+
     public function handle(): int
     {
         $name = $this->argument('name');

@@ -12,6 +12,10 @@ There are two commands and two controllers inside the Product module:
 
 This repository example uses sqlite, so you can easily check out and try it yourself :)
 ```
+1. Run the following command: php artisan gacela:create-sqlite
+
+OR manually:
+
 1. Create a empty file in '/database/database.sqlite'
 2. Execute the 'php artisan migrate' command
 ```
