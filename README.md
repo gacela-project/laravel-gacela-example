@@ -11,10 +11,11 @@ There are two commands and two controllers inside the Product module:
 This repository example uses sqlite, so you can check out and try it yourself.
 
 ```bash
-# 1. Run the following command: 
+# 1. Run the custom `CreateSqliteFileCommand`
 php artisan gacela:create-sqlite
 ```
-OR manually:
+
+Or you can do it manually with:
 ```bash
 # 1. Create a empty file in 
 touch /database/database.sqlite
@@ -24,8 +25,8 @@ php artisan migrate
 
 ### Commands
 
-> App > Console > Commands > AddProductCommand
-> App > Console > Commands > ListProductCommand
+- App > Console > Commands > AddProductCommand
+- App > Console > Commands > ListProductCommand
 
 ```bash
 php artisan gacela:product:add {PRODUCT_NAME} {PRODUCT_PRICE=49}
@@ -35,8 +36,10 @@ php artisan gacela:product:list
 
 ### Controllers
 
-> App > Http > Controller > AddProductController
-> App > Http > Controller > ListProductController
+- App > Http > Controller > AddProductController
+- App > Http > Controller > ListProductController
+
+### Demo 
 
 To locally run the application use `php artisan serve`
 
