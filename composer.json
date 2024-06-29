@@ -9,8 +9,8 @@
         "laravel/framework": "^10.28",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "gacela-project/gacela": "^1.6",
-        "gacela-project/gacela-env-config-reader": "^0.2"
+        "gacela-project/gacela": "^1.7",
+        "gacela-project/gacela-env-config-reader": "^0.3"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
@@ -48,7 +48,9 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "test-unit": "XDEBUG_MODE=off ./vendor/bin/phpunit --testsuite=unit"
+        "test": ["@test-unit","@test-feature"],
+        "test-unit": "XDEBUG_MODE=off ./vendor/bin/phpunit --testsuite=unit",
+        "test-feature": "XDEBUG_MODE=off ./vendor/bin/phpunit --testsuite=feature"
     },
     "extra": {
         "laravel": {
