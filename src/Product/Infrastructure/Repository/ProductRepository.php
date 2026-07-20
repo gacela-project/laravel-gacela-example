@@ -12,11 +12,7 @@ final class ProductRepository implements ProductRepositoryInterface
 {
     public function save(ProductTransfer $productTransfer): void
     {
-        $productEntity = new Product;
-        $productEntity->name = $productTransfer->getName();
-        $productEntity->price = $productTransfer->getPrice();
-
-        $productEntity->save();
+        (new Product($productTransfer->toArray()))->save();
     }
 
     /**
@@ -25,13 +21,7 @@ final class ProductRepository implements ProductRepositoryInterface
     public function findAll(): array
     {
         return array_map(
-            static function (Product $p) {
-                $productTransfer = (new ProductTransfer);
-                $productTransfer->setPrice((int) $p->price);
-                $productTransfer->setName($p->name);
-
-                return $productTransfer;
-            },
+            static fn (Product $p) => (new ProductTransfer)->fromArray($p->toArray()),
             Product::all()->all()
         );
     }

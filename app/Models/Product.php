@@ -6,6 +6,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property int $price
+ */
 class Product extends Model
 {
     protected $table = 'products';
