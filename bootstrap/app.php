@@ -3,6 +3,10 @@
 use App\Console\Commands\CreateSqliteFileCommand;
 use App\Console\Commands\Product\AddProductCommand;
 use App\Console\Commands\Product\ListProductCommand;
+use Gacela\Console\Infrastructure\Command\DebugGraphCommand;
+use Gacela\Console\Infrastructure\Command\DebugModuleCommand;
+use Gacela\Console\Infrastructure\Command\ListModulesCommand;
+use Gacela\Console\Infrastructure\Command\MakeModuleCommand;
 use Gacela\Framework\Gacela;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,9 +20,15 @@ $app = Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withCommands([
+        // Application (Product module) commands
         CreateSqliteFileCommand::class,
         AddProductCommand::class,
         ListProductCommand::class,
+        // Gacela module dev tooling, exposed through Laravel's artisan
+        MakeModuleCommand::class,
+        ListModulesCommand::class,
+        DebugModuleCommand::class,
+        DebugGraphCommand::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {
         //
