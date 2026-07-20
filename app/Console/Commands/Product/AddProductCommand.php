@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands\Product;
 
 use Illuminate\Console\Command;
+use Src\Product\Infrastructure\PriceInput;
 use Src\Product\ProductFacade;
 
 final class AddProductCommand extends Command
@@ -24,23 +25,10 @@ final class AddProductCommand extends Command
         $name = $this->argument('name');
         $price = $this->argument('price');
 
-        $this->facade->createNewProduct($name, $this->validatePriceInput($price));
+        $this->facade->createNewProduct($name, PriceInput::parse($price));
 
         $this->output->writeln($name.' product created successfully');
 
         return self::SUCCESS;
-    }
-
-    private function validatePriceInput(?string $price): ?int
-    {
-        if ($price === null) {
-            return null;
-        }
-
-        if (filter_var($price, FILTER_VALIDATE_INT) === 0 || ! filter_var($price, FILTER_VALIDATE_INT) === false) {
-            return (int) $price;
-        }
-
-        throw new \RuntimeException('Second parameter [price] must be of type integer');
     }
 }

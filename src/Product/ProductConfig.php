@@ -10,6 +10,6 @@ final class ProductConfig extends AbstractConfig
 {
     public function getDefaultProductPrice(): int
     {
-        return (int) $this->get('DEFAULT_PRODUCT_PRICE');
+        return (int) $this->getString('DEFAULT_PRODUCT_PRICE');
     }
 }

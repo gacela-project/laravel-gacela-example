@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Gacela\Framework\ServiceResolverAwareTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Src\Product\Infrastructure\PriceInput;
 use Src\Product\ProductFacade;
 
 /**
@@ -19,21 +20,8 @@ final class AddProductController extends Controller
 
     public function __invoke(string $name, ?string $price = null): RedirectResponse
     {
-        $this->getFacade()->createNewProduct($name, $this->validatePriceInput($price));
+        $this->getFacade()->createNewProduct($name, PriceInput::parse($price));
 
         return Redirect::to('list')->with('success', "The product {$name} has been created.");
-    }
-
-    private function validatePriceInput(?string $price): ?int
-    {
-        if ($price === null) {
-            return null;
-        }
-
-        if (filter_var($price, FILTER_VALIDATE_INT) === 0 || ! filter_var($price, FILTER_VALIDATE_INT) === false) {
-            return (int) $price;
-        }
-
-        throw new \RuntimeException('Second parameter [price] must be of type integer');
     }
 }

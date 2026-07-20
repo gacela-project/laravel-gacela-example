@@ -37,17 +37,9 @@ $app = Application::configure(basePath: dirname(__DIR__))
         //
     })->create();
 
-/*
-|--------------------------------------------------------------------------
-| Bootstrap Gacela
-|--------------------------------------------------------------------------
-|
-| This is where Gacela boots. It reads the "gacela.php" file at the project
-| root, which loads the app config (config/*.php and .env*) and resolves the
-| module bindings (e.g. ProductRepositoryInterface). Thanks to this, the
-| Facades can inject their Factories and resolve everything you need.
-|
-*/
+// Boot Gacela: it reads gacela.php at the project root, which loads the app
+// config (config/*.php + .env*) and registers the module bindings, so the
+// Facades can resolve their Factories and dependencies.
 Gacela::bootstrap($app->basePath());
 
 return $app;
