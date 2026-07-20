@@ -23,11 +23,11 @@ final class ProductCreator
 
     public function createProduct(string $name, ?int $price = null): void
     {
-        $product = new ProductTransfer();
+        $product = new ProductTransfer;
         $product->name = $name;
         $product->price = $price ?? $this->defaultPrice;
 
         $this->productRepository->save($product);
-        # send events, emails, or whatever
+        // send events, emails, or whatever
     }
 }

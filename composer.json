@@ -1,26 +1,29 @@
 {
+    "$schema": "https://getcomposer.org/schema.json",
     "name": "gacela-project/laravel-gacela-example",
     "type": "project",
     "description": "Laravel using Gacela Framework",
     "keywords": ["framework", "gacela", "laravel"],
+    "license": "MIT",
     "require": {
-        "php": "^8.1",
-        "guzzlehttp/guzzle": "^7.8",
-        "laravel/framework": "^10.48",
-        "laravel/sanctum": "^3.3",
-        "laravel/tinker": "^2.9",
-        "gacela-project/gacela": "^1.7",
-        "gacela-project/gacela-env-config-reader": "^0.3"
+        "php": "^8.2",
+        "gacela-project/gacela": "^1.18",
+        "gacela-project/gacela-env-config-reader": "^0.3",
+        "laravel/framework": "^12.0",
+        "laravel/sanctum": "^4.0",
+        "laravel/tinker": "^2.10"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
         "fakerphp/faker": "^1.23",
-        "laravel/pint": "^1.16",
-        "laravel/sail": "^1.30",
+        "gacela-project/phpstan-extension": "^0.4",
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.18",
+        "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^7.10",
-        "phpunit/phpunit": "^10.5",
-        "spatie/laravel-ignition": "^2.8"
+        "nunomaduro/collision": "^8.6",
+        "phpunit/phpunit": "^11.5",
+        "roave/security-advisories": "dev-latest",
+        "spatie/laravel-ignition": "^2.9"
     },
     "autoload": {
         "psr-4": {
@@ -37,20 +40,26 @@
     },
     "scripts": {
         "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump"
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --graceful --ansi"
         ],
-        "test": ["@test-unit","@test-feature"],
+        "test": ["@test-unit", "@test-feature"],
         "test-unit": "XDEBUG_MODE=off ./vendor/bin/phpunit --testsuite=unit",
-        "test-feature": "XDEBUG_MODE=off ./vendor/bin/phpunit --testsuite=feature"
+        "test-feature": "XDEBUG_MODE=off ./vendor/bin/phpunit --testsuite=feature",
+        "phpstan": "XDEBUG_MODE=off ./vendor/bin/phpstan analyse --memory-limit=1G",
+        "pint": "./vendor/bin/pint",
+        "pint-test": "./vendor/bin/pint --test"
     },
     "extra": {
         "laravel": {
@@ -58,12 +67,15 @@
         }
     },
     "config": {
-        "platform": {
-            "php": "8.1"
-        },
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "8.2"
+        },
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true

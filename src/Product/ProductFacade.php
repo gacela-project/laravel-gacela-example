@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Src\Product;
 
-use App\Models\Product;
 use Gacela\Framework\AbstractFacade;
+use Src\Product\Domain\ProductTransfer;
 
 /**
  * @method ProductFactory getFactory()
@@ -20,7 +20,7 @@ final class ProductFacade extends AbstractFacade
     }
 
     /**
-     * @return list<Product>
+     * @return list<ProductTransfer>
      */
     public function getAllProducts(): array
     {

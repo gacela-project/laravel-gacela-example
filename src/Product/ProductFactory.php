@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Src\Product;
 
+use Gacela\Framework\AbstractFactory;
 use Src\Product\Application\ProductCreator;
 use Src\Product\Application\ProductLister;
 use Src\Product\Domain\ProductRepositoryInterface;
-use Gacela\Framework\AbstractFactory;
 
 /**
  * @method ProductConfig getConfig()

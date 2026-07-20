@@ -13,13 +13,13 @@ final class CreateSqliteFileCommand extends Command
 
     public function handle(): int
     {
-        $databaseSqliteFile = base_path('database') . '/database.sqlite';
+        $databaseSqliteFile = base_path('database').'/database.sqlite';
 
-        if (!file_exists($databaseSqliteFile)) {
+        if (! file_exists($databaseSqliteFile)) {
             touch($databaseSqliteFile);
         }
 
-        if ('true' === $this->choice('Run migrations?', ['true', 'false'], 'true')) {
+        if ($this->choice('Run migrations?', ['true', 'false'], 'true') === 'true') {
             Artisan::call('migrate', ['--force' => true]);
 
             $this->line(Artisan::output());

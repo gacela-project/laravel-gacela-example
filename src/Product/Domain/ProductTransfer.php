@@ -8,10 +8,8 @@ use Src\Shared\Transfer\AbstractTransfer;
 
 /**
  * @method int|null getId()
- *
  * @method string|null getName()
  * @method self setName(string $name)
- *
  * @method int|null getPrice()
  * @method self setPrice(int $param)
  */

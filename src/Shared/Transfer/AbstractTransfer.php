@@ -15,8 +15,7 @@ use function reset;
 abstract class AbstractTransfer
 {
     /**
-     * @param array<string,mixed> $array
-     *
+     * @param  array<string,mixed>  $array
      * @return static
      *
      * @psalm-suppress MixedAssignment
@@ -41,22 +40,24 @@ abstract class AbstractTransfer
     }
 
     /**
+     * @param  list<mixed>  $arguments
      * @return mixed|static
      */
     public function __call(string $name, array $arguments = [])
     {
         // fluent getters
-        $withoutPrefix = (string)preg_replace('/^get/', '', $name);
+        $withoutPrefix = (string) preg_replace('/^get/', '', $name);
         $normalizedName = lcfirst($withoutPrefix);
         if (property_exists($this, $normalizedName)) {
             return $this->{$normalizedName};
         }
 
         // fluent setters
-        $withoutPrefix = (string)preg_replace('/^set/', '', $name);
+        $withoutPrefix = (string) preg_replace('/^set/', '', $name);
         $normalizedName = lcfirst($withoutPrefix);
         if (property_exists($this, $normalizedName)) {
             $this->{$normalizedName} = reset($arguments);
+
             return $this;
         }
 
@@ -72,13 +73,11 @@ abstract class AbstractTransfer
     }
 
     /**
-     * @param mixed $value
-     *
-     * @return mixed|static
+     * @param  mixed  $value
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, $value): void
     {
-        return $this->__call($name, [$value]);
+        $this->__call($name, [$value]);
     }
 
     public function __isset(string $name): bool

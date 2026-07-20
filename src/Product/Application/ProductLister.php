@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Src\Product\Application;
 
 use Src\Product\Domain\ProductRepositoryInterface;
-use App\Models\Product;
+use Src\Product\Domain\ProductTransfer;
 
 final class ProductLister
 {
@@ -17,7 +17,7 @@ final class ProductLister
     }
 
     /**
-     * @return list<Product>
+     * @return list<ProductTransfer>
      */
     public function getAllProducts(): array
     {

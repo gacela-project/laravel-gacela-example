@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use Gacela\Framework\DocBlockResolverAwareTrait;
+use Gacela\Framework\ServiceResolverAwareTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Src\Product\ProductFacade;
@@ -15,9 +15,9 @@ use Src\Product\ProductFacade;
  */
 final class AddProductController extends Controller
 {
-    use DocBlockResolverAwareTrait;
+    use ServiceResolverAwareTrait;
 
-    public function __invoke(string $name, string $price = null): RedirectResponse
+    public function __invoke(string $name, ?string $price = null): RedirectResponse
     {
         $this->getFacade()->createNewProduct($name, $this->validatePriceInput($price));
 
@@ -30,7 +30,7 @@ final class AddProductController extends Controller
             return null;
         }
 
-        if (filter_var($price, FILTER_VALIDATE_INT) === 0 || !filter_var($price, FILTER_VALIDATE_INT) === false) {
+        if (filter_var($price, FILTER_VALIDATE_INT) === 0 || ! filter_var($price, FILTER_VALIDATE_INT) === false) {
             return (int) $price;
         }
 

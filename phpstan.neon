@@ -1,0 +1,13 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/gacela-project/phpstan-extension/extension.neon
+
+parameters:
+    level: 6
+    paths:
+        - app
+        - src
+    gacela:
+        modulesNamespace: Src
+        excludedNamespaces:
+            - Src\Shared
