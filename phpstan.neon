@@ -1,13 +1,34 @@
 includes:
     - vendor/larastan/larastan/extension.neon
-    - vendor/gacela-project/phpstan-extension/extension.neon
+    # The Gacela rules ship with the framework itself (they used to live in the
+    # now-archived gacela-project/phpstan-extension). With
+    # phpstan/extension-installer this include is unnecessary.
+    - vendor/gacela-project/gacela/phpstan-gacela.neon
 
 parameters:
     level: 6
     paths:
         - app
         - src
-    gacela:
-        modulesNamespace: Src
-        excludedNamespaces:
-            - Src\Shared
+
+services:
+    # Opt-in: enforce that a module is only reached through its Facade. Src\Shared
+    # is the shared kernel, so it is exempt in both directions. The two rules are
+    # halves of one check -- one matches class names written at the call site, the
+    # other resolves the receiver of a method call by type.
+    -
+        class: Gacela\PHPStan\Rules\CrossModuleViaFacadeRule
+        tags: [phpstan.rules.rule]
+        arguments:
+            rootNamespace: Src
+            modulePathSegments: 1
+            sharedNamespaces:
+                - Src\Shared
+    -
+        class: Gacela\PHPStan\Rules\CrossModuleMethodCallRule
+        tags: [phpstan.rules.rule]
+        arguments:
+            rootNamespace: Src
+            modulePathSegments: 1
+            sharedNamespaces:
+                - Src\Shared
