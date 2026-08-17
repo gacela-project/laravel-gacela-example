@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 
 final class CreateSqliteFileCommand extends Command
 {
-    protected $signature = 'gacela:create-sqlite';
+    protected $signature = 'app:create-sqlite';
 
     public function handle(): int
     {

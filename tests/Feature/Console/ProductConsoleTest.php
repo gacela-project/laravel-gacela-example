@@ -13,7 +13,7 @@ final class ProductConsoleTest extends TestCase
 
     public function test_listing_is_empty(): void
     {
-        $command = $this->artisan('gacela:product:list');
+        $command = $this->artisan('product:list');
 
         $command->doesntExpectOutput('Product name');
         $command->assertSuccessful();
@@ -21,10 +21,10 @@ final class ProductConsoleTest extends TestCase
 
     public function test_create_and_list_products(): void
     {
-        $this->artisan('gacela:product:add product1');
-        $this->artisan('gacela:product:add product2 200');
+        $this->artisan('product:add product1');
+        $this->artisan('product:add product2 200');
 
-        $command = $this->artisan('gacela:product:list');
+        $command = $this->artisan('product:list');
 
         $command->expectsOutputToContain('Product name: product1, price: 49');
         $command->expectsOutputToContain('Product name: product2, price: 200');
