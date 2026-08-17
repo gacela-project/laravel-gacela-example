@@ -18,10 +18,15 @@ return [
     // The directory holding gacela.php. Null defaults to base_path().
     'app_root_dir' => null,
 
-    // Where Gacela writes its caches. Null leaves Gacela's own default in place.
+    // Where Gacela writes its caches. Null leaves Gacela's own default in place,
+    // which is the *system temp directory* -- not somewhere under the app. On a
+    // deploy point this at storage: 'cache_dir' => storage_path('framework/gacela').
     'cache_dir' => null,
 
-    // Enable the on-disk resolution cache. Null leaves Gacela's own default in place.
+    // Enable the on-disk resolution cache. Null leaves Gacela's own default in
+    // place (off). Turn it on in production and `artisan optimize` writes the
+    // resolution cache alongside Laravel's own; `optimize:clear` removes it.
+    // Left off here so an example never serves a stale module resolution.
     'file_cache' => null,
 
     // Namespaces Gacela scans for modules.
