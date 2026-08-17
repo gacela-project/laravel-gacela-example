@@ -6,16 +6,16 @@
     "keywords": ["framework", "gacela", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
-        "gacela-project/gacela": "^1.18",
+        "php": "^8.3",
+        "gacela-project/gacela": "^2.4",
         "gacela-project/gacela-env-config-reader": "^0.3",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.10"
+        "laravel/tinker": "^2.10",
+        "symfony/console": "^7.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
-        "gacela-project/phpstan-extension": "^0.4",
         "larastan/larastan": "^3.0",
         "laravel/pint": "^1.18",
         "laravel/sail": "^1.41",
@@ -71,7 +71,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "platform": {
-            "php": "8.2"
+            "php": "8.3"
         },
         "allow-plugins": {
             "php-http/discovery": true

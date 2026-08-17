@@ -4,7 +4,7 @@ A small, runnable showcase of how to build **[Gacela](https://gacela-project.com
 [Laravel](https://laravel.com/) 12 application**. If you have never seen Gacela before, this README is
 meant to get you productive in a few minutes.
 
-> **Stack:** Laravel 12 · Gacela 1.18 · PHP 8.2+ · Vite · PHPStan (larastan) · Pint
+> **Stack:** Laravel 12 · Gacela 2.4 · PHP 8.3+ · Vite · PHPStan (larastan) · Pint
 
 ## What is Gacela?
 
@@ -37,19 +37,41 @@ separated behind module boundaries.
 
 ### Where Gacela boots
 
-Gacela is bootstrapped in **[`bootstrap/app.php`](bootstrap/app.php)**, right after Laravel's
-application is created (so the Laravel container/helpers are already available):
+Gacela ships a Laravel service provider inside the framework package, so there is nothing extra to
+require and nothing to bootstrap by hand. Registering it in
+**[`bootstrap/providers.php`](bootstrap/providers.php)** is the whole integration:
 
 ```php
-$app = Application::configure(basePath: dirname(__DIR__))
-    ->withRouting(...)
-    ->withCommands([...])
-    ->create();
-
-Gacela::bootstrap($app->basePath()); // <-- reads gacela.php
-
-return $app;
+return [
+    AppServiceProvider::class,
+    Gacela\LaravelBridge\GacelaServiceProvider::class,
+];
 ```
+
+That gives you four things:
+
+1. **Gacela bootstrapped when the application boots**, with `base_path()` as the app root — so
+   [`gacela.php`](gacela.php) is read without an explicit `Gacela::bootstrap()` call.
+2. **Laravel services reachable from Gacela** — the ones you list in `external_services`, and only
+   those. This app needs none: its repository reaches Eloquent directly.
+3. **Gacela's console commands in `artisan`**, under a `gacela:` prefix. All of them, not a
+   hand-picked few. The prefix is not decoration — artisan owns the whole `make:*` namespace.
+4. **`artisan optimize` warms Gacela's caches too**, so a deploy has one optimize step instead of
+   two. `optimize:clear` clears them again.
+
+### Configuring the bridge: `config/gacela.php`
+
+Published with `php artisan vendor:publish --tag=gacela-config`. Every key here is left at its
+default; each one is commented in [`config/gacela.php`](config/gacela.php). Two are worth knowing
+about before a deploy:
+
+- `file_cache` is **off**, which is Gacela's own default. Turn it on in production and `artisan
+  optimize` writes Gacela's resolution cache alongside Laravel's.
+- `cache_dir` defaults to the **system temp directory**, not somewhere under the app. If you enable
+  `file_cache`, point this at `storage_path('framework/gacela')`.
+
+An unknown or mistyped key fails at boot naming the key — Laravel has no compile step where a
+validated config tree could catch it.
 
 ### The bootstrap config: `gacela.php`
 
@@ -67,10 +89,13 @@ return static function (GacelaConfig $config) {
 };
 ```
 
-The `addAppConfig('config/*.php')` glob is the bridge that makes **Laravel's configuration readable from
-inside Gacela modules** (e.g. `ProductConfig` reads `DEFAULT_PRODUCT_PRICE`). The `addBinding(...)` line
-is what lets the Factory receive a concrete `ProductRepository` wherever a `ProductRepositoryInterface`
+The `addAppConfig('config/*.php')` glob is what makes **Laravel's configuration readable from inside
+Gacela modules** (e.g. `ProductConfig` reads `DEFAULT_PRODUCT_PRICE`). The `addBinding(...)` line is
+what lets the Factory receive a concrete `ProductRepository` wherever a `ProductRepositoryInterface`
 is requested.
+
+`gacela.php` stays the place for anything Gacela-specific; `config/gacela.php` configures the
+*bridge*. The two are different files with different jobs.
 
 ## The Product module: request flow
 
@@ -110,6 +135,7 @@ src/Product
 │   ├── ProductRepositoryInterface.php
 │   └── ProductTransfer.php
 ├── Infrastructure/              # adapters — the only layer allowed to touch Eloquent
+│   ├── PriceInput.php
 │   └── Repository/ProductRepository.php
 ├── ProductConfig.php            # Config pillar
 ├── ProductFacade.php            # Facade pillar
@@ -120,7 +146,7 @@ src/Product
 
 ## Getting started
 
-**Requirements:** PHP 8.2+, Composer, Node.js 20+.
+**Requirements:** PHP 8.3+, Composer, Node.js 20+.
 
 ```bash
 # 1. Install dependencies
@@ -132,7 +158,7 @@ cp .env.example .env
 php artisan key:generate
 
 # 3. Create the SQLite database and run migrations
-php artisan gacela:create-sqlite      # interactive helper
+php artisan app:create-sqlite         # interactive helper
 #   ...or manually:
 #   touch database/database.sqlite && php artisan migrate
 
@@ -149,19 +175,28 @@ php artisan serve
 
 Two commands drive the module, each showing a different (valid) way to reach a Gacela Facade:
 
-- **`AddProductCommand`** — a Laravel command that receives the Facade via **constructor injection**.
+- **`AddProductCommand`** — a Laravel command whose constructor parameter carries the bridge's
+  `#[Inject(ProductFacade::class)]`, so **Laravel resolves it through Gacela's container** instead of
+  autowiring it itself. The class argument is required there: Laravel hands a contextual attribute no
+  parameter to read a type from. Note the parameter is deliberately *not* promoted — a promoted
+  parameter carries its attributes onto the property too, and the bridge then reads a constructor
+  injection as a property one, which throws for a `readonly` property.
 - **`ListProductCommand`** — a Symfony command that resolves the Facade via Gacela's
-  `ServiceResolverAwareTrait` (the `@method ProductFacade getFacade()` doc-block).
+  `ServiceResolverAwareTrait`, declared with `#[ServiceMap(method: 'getFacade', className:
+  ProductFacade::class)]`.
 
 ```bash
-php artisan gacela:product:add Keyboard        # uses DEFAULT_PRODUCT_PRICE (49)
-php artisan gacela:product:add Monitor 150
-php artisan gacela:product:list
+php artisan product:add Keyboard        # uses DEFAULT_PRODUCT_PRICE (49)
+php artisan product:add Monitor 150
+php artisan product:list
 ```
+
+> The application's own commands live outside the `gacela:` namespace, because the bridge now owns
+> that prefix for the framework's commands. `php artisan list gacela` shows Gacela's, not yours.
 
 ### Routes
 
-Controllers resolve the Facade with `ServiceResolverAwareTrait`.
+Controllers resolve the Facade with `ServiceResolverAwareTrait` plus `#[ServiceMap]`.
 
 | Method | URI | Name | Controller |
 |--------|-----|------|------------|
@@ -180,11 +215,15 @@ module without writing boilerplate:
 
 ```bash
 # Facade + Factory + Config + Provider only
-php artisan make:module Src/Basket
+php artisan gacela:make:module Src/Basket
 
 # ...or a "service" module (Facade wired to a Domain service) plus a GacelaTestCase test
-php artisan make:module Src/Basket --template=service --with-tests
+php artisan gacela:make:module Src/Basket --template=service --with-tests
 ```
+
+Generating over files that already exist is refused — the whole run writes nothing and exits `1`.
+Pass `--force` if replacing really is the intent, or `gacela:make:file Src/Basket Config` to fill a
+single gap.
 
 This creates `src/Basket/BasketFacade.php`, `BasketFactory.php`, `BasketConfig.php`,
 `BasketProvider.php` (and, with `--template=service`, a `Domain/BasketService.php` and
@@ -193,16 +232,23 @@ ready to go.
 
 ## Inspecting modules
 
-The Gacela debug commands are also exposed through `artisan`:
+The bridge exposes every Gacela command through `artisan` — `php artisan list gacela` is the full
+list:
 
 ```bash
-php artisan list:modules           # table of every module and which pillars it defines
-php artisan debug:module Product   # resolved Facade/Factory/Config + container bindings + dep tree
-php artisan debug:graph            # module dependency graph (who imports whom)
+php artisan gacela:list:modules           # table of every module and which pillars it defines
+php artisan gacela:debug:module Product   # resolved Facade/Factory/Config + bindings + dep tree
+php artisan gacela:debug:graph            # module dependency graph (who imports whom)
+php artisan gacela:debug:modules --check  # can every pillar constructor be satisfied?
+php artisan gacela:doctor                 # environment and wiring health checks
 ```
 
-For example, `php artisan debug:module Product` prints the resolved classes and the
+For example, `php artisan gacela:debug:module Product` prints the resolved classes and the
 `ProductRepositoryInterface => ProductRepository` binding declared in `gacela.php`.
+
+> Run these through `artisan`, not through `vendor/bin/gacela`. `gacela.php` feeds Laravel's
+> `config/*.php` into Gacela, and those files call helpers like `storage_path()` that only exist
+> inside a booted Laravel application — the standalone binary fails on them.
 
 ## Testing
 
@@ -239,7 +285,17 @@ composer pint-test     # Pint in check-only mode
 composer phpstan       # PHPStan level 6 (larastan + Gacela module-boundary rules)
 ```
 
-CI runs the whole matrix (PHP 8.2 / 8.3 / 8.4) plus the Vite build — see
+Gacela's PHPStan rules **ship with the framework** — there is no extension package to install. With
+[phpstan/extension-installer](https://github.com/phpstan/extension-installer) they register
+themselves; this repo does not use it, so [`phpstan.neon`](phpstan.neon) includes
+`vendor/gacela-project/gacela/phpstan-gacela.neon` by hand and turns on the two opt-in cross-module
+rules for the `Src` namespace.
+
+The rules are what makes `#[ServiceMap]` worth writing: with the attribute declared, `getFacade()`
+has a real type, so `$this->getFacade()->typoMethod()` is a PHPStan error rather than a call on
+`mixed`.
+
+CI runs the matrix (PHP 8.3 / 8.4), `gacela:doctor`, and the Vite build — see
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ---

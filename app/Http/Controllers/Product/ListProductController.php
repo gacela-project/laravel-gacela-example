@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use Gacela\Framework\ServiceResolver\ServiceMap;
 use Gacela\Framework\ServiceResolverAwareTrait;
 use Illuminate\View\View;
 use Src\Product\ProductFacade;
@@ -12,6 +13,7 @@ use Src\Product\ProductFacade;
 /**
  * @method ProductFacade getFacade()
  */
+#[ServiceMap(method: 'getFacade', className: ProductFacade::class)]
 final class ListProductController extends Controller
 {
     use ServiceResolverAwareTrait;
