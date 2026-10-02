@@ -7,9 +7,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "gacela-project/gacela": "^2.4",
+        "gacela-project/gacela": "^2.6",
         "gacela-project/gacela-env-config-reader": "^0.4",
         "laravel/framework": "^12.0",
+        "laravel/octane": "^2.20",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10",
         "symfony/console": "^7.0"
