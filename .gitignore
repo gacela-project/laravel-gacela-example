@@ -24,3 +24,10 @@ yarn-error.log
 /.zed
 *.cache
 .DS_Store
+
+# Octane server binaries and their config
+**/caddy
+/frankenphp
+/public/frankenphp-worker.php
+/rr
+/.rr.yaml

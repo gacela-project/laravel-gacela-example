@@ -4,7 +4,7 @@ A small, runnable showcase of how to build **[Gacela](https://gacela-project.com
 [Laravel](https://laravel.com/) 12 application**. If you have never seen Gacela before, this README is
 meant to get you productive in a few minutes.
 
-> **Stack:** Laravel 12 · Gacela 2.4 · PHP 8.3+ · Vite · PHPStan (larastan) · Pint
+> **Stack:** Laravel 12 · Gacela 2.6 · Octane · PHP 8.3+ · Vite · PHPStan (larastan) · Pint
 
 ## What is Gacela?
 
@@ -48,7 +48,7 @@ return [
 ];
 ```
 
-That gives you four things:
+That gives you five things:
 
 1. **Gacela bootstrapped when the application boots**, with `base_path()` as the app root — so
    [`gacela.php`](gacela.php) is read without an explicit `Gacela::bootstrap()` call.
@@ -58,6 +58,9 @@ That gives you four things:
    hand-picked few. The prefix is not decoration — artisan owns the whole `make:*` namespace.
 4. **`artisan optimize` warms Gacela's caches too**, so a deploy has one optimize step instead of
    two. `optimize:clear` clears them again.
+5. **A clean slate after each Octane request that completes.** The bridge listens to Octane's `RequestTerminated`
+   and calls `Gacela::resetRequestState()`, so a worker keeps its warm caches but drops the
+   Factories and the services they built. See [Running under Octane](#running-under-octane).
 
 ### Configuring the bridge: `config/gacela.php`
 
@@ -168,6 +171,34 @@ npm run build      # or `npm run dev` for the dev server
 # 5. Serve
 php artisan serve
 ```
+
+## Running under Octane
+
+[Laravel Octane](https://laravel.com/docs/octane) is required already and its config is published in
+[`config/octane.php`](config/octane.php). `.env.example` picks FrankenPHP:
+
+```bash
+php artisan octane:start                      # FrankenPHP, from OCTANE_SERVER
+php artisan octane:start --server=roadrunner  # or RoadRunner
+```
+
+The first start offers to download the server binary into the project root. It is gitignored, so
+each machine downloads its own. RoadRunner also asks to require `spiral/roadrunner-http` and
+`spiral/roadrunner-cli`.
+
+One worker serves many requests from one booted application, so anything a request builds would
+still be there for the next one. Nothing to add for Gacela: the bridge resets its request state
+after each request. What stays for the process is what is safe to share, such as resolved class
+names and the merged config.
+
+`ProductFactory` shows the difference. `CreatedProducts` is a `singleton()` that records the
+products a request created, and `ProductFacade::getProductsCreatedInThisRequest()` reads it. Under
+Octane it only ever holds the current request's products.
+[`OctaneWorkerTest`](tests/Feature/Octane/OctaneWorkerTest.php) proves it without a server: it
+serves two requests from one application, firing `RequestTerminated` between them, and checks the
+second request does not see the first one's product. Without the event, it does.
+
+Keep request data out of `gacela.php` singletons: those live for the whole process.
 
 ## Using the Product module
 

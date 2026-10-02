@@ -13,12 +13,16 @@ final class ProductCreator
 
     private int $defaultPrice;
 
+    private CreatedProducts $createdProducts;
+
     public function __construct(
         ProductRepositoryInterface $productRepository,
-        int $defaultPrice
+        int $defaultPrice,
+        CreatedProducts $createdProducts
     ) {
         $this->productRepository = $productRepository;
         $this->defaultPrice = $defaultPrice;
+        $this->createdProducts = $createdProducts;
     }
 
     public function createProduct(string $name, ?int $price = null): void
@@ -28,5 +32,6 @@ final class ProductCreator
         $product->price = $price ?? $this->defaultPrice;
 
         $this->productRepository->save($product);
+        $this->createdProducts->add($name);
     }
 }

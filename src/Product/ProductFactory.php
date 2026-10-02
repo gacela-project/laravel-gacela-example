@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Src\Product;
 
 use Gacela\Framework\AbstractFactory;
+use Src\Product\Application\CreatedProducts;
 use Src\Product\Application\ProductCreator;
 use Src\Product\Application\ProductLister;
 use Src\Product\Domain\ProductRepositoryInterface;
@@ -26,8 +27,14 @@ final class ProductFactory extends AbstractFactory
     {
         return new ProductCreator(
             $this->productRepository,
-            $this->getConfig()->getDefaultProductPrice()
+            $this->getConfig()->getDefaultProductPrice(),
+            $this->getCreatedProducts()
         );
+    }
+
+    public function getCreatedProducts(): CreatedProducts
+    {
+        return $this->singleton(CreatedProducts::class, static fn (): CreatedProducts => new CreatedProducts);
     }
 
     public function createProductLister(): ProductLister

@@ -28,4 +28,14 @@ final class ProductFacade extends AbstractFacade
             ->createProductLister()
             ->getAllProducts();
     }
+
+    /**
+     * @return list<string>
+     */
+    public function getProductsCreatedInThisRequest(): array
+    {
+        return $this->getFactory()
+            ->getCreatedProducts()
+            ->names();
+    }
 }
