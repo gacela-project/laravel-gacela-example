@@ -58,9 +58,9 @@ That gives you five things:
    hand-picked few. The prefix is not decoration — artisan owns the whole `make:*` namespace.
 4. **`artisan optimize` warms Gacela's caches too**, so a deploy has one optimize step instead of
    two. `optimize:clear` clears them again.
-5. **A clean slate after each Octane request that completes.** The bridge listens to Octane's `RequestTerminated`
-   and calls `Gacela::resetRequestState()`, so a worker keeps its warm caches but drops the
-   Factories and the services they built. See [Running under Octane](#running-under-octane).
+5. **A clean slate for each Octane request.** The bridge listens to Octane's `RequestReceived`
+   and `RequestTerminated` and calls `Gacela::resetRequestState()`, so a worker keeps its warm
+   caches but drops the Factories and the services they built, even after a request that threw. See [Running under Octane](#running-under-octane).
 
 ### Configuring the bridge: `config/gacela.php`
 

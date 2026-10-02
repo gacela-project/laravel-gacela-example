@@ -7,7 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "gacela-project/gacela": "^2.6",
+        "gacela-project/gacela": "^2.6.1",
         "gacela-project/gacela-env-config-reader": "^0.4",
         "laravel/framework": "^12.0",
         "laravel/octane": "^2.20",

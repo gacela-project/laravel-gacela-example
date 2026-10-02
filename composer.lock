@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f196e18139274b644cb89465f9996b5d",
+    "content-hash": "13f62863d8ad28209d89a8b52c788ed8",
     "packages": [
         {
             "name": "brick/math",
@@ -657,16 +657,16 @@
         },
         {
             "name": "gacela-project/gacela",
-            "version": "2.6.0",
+            "version": "2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gacela-project/gacela.git",
-                "reference": "312ae8964727885deb15e16cac4f1c0bb6b7d310"
+                "reference": "66143eaef867c3c94eb9617b60b1583a635d6f76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gacela-project/gacela/zipball/312ae8964727885deb15e16cac4f1c0bb6b7d310",
-                "reference": "312ae8964727885deb15e16cac4f1c0bb6b7d310",
+                "url": "https://api.github.com/repos/gacela-project/gacela/zipball/66143eaef867c3c94eb9617b60b1583a635d6f76",
+                "reference": "66143eaef867c3c94eb9617b60b1583a635d6f76",
                 "shasum": ""
             },
             "require": {
@@ -755,7 +755,7 @@
             ],
             "support": {
                 "issues": "https://github.com/gacela-project/gacela/issues",
-                "source": "https://github.com/gacela-project/gacela/tree/2.6.0"
+                "source": "https://github.com/gacela-project/gacela/tree/2.6.1"
             },
             "funding": [
                 {
@@ -763,7 +763,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-10-02T11:49:58+00:00"
+            "time": "2026-10-02T12:25:28+00:00"
         },
         {
             "name": "gacela-project/gacela-env-config-reader",
